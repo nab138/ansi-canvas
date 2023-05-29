@@ -4,7 +4,6 @@
  */
 
 var ansi = require('ansi');
-var Canvas = require('canvas');
 
 /**
  * Module exports.
@@ -20,7 +19,7 @@ module.exports = term;
  * @api public
  */
 
-function term (opts) {
+function term (canvas, opts) {
   if (!opts) opts = {};
   var stream = opts.stream || process.stdout;
   var small = null == opts.small ? true : !!opts.small;
@@ -28,13 +27,14 @@ function term (opts) {
   var pixelWidth = small ? 1 : 2;
 
   // create <canvas> instance
-  var canvas = new Canvas(stream.columns / pixelWidth, stream.rows / pixelHeight);
+  canvas.width = stream.columns / pixelWidth,
+  canvas.height = stream.rows / pixelHeight;
   canvas.render = render;
   canvas.stream = stream;
   canvas.small = small;
 
   // cached "context"
-  canvas.renderCtx = canvas.getContext('2d');
+  canvas.renderCtx = canvas.getContext('2d', { willReadFrequently: true });
 
   // handle the "resize" event
   stream.on('resize', function () {
