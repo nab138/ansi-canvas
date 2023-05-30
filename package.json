@@ -16,8 +16,7 @@
     "terminal"
   ],
   "dependencies": {
-    "ansi": "^0.3.1",
-    "canvas": "^2.11.2"
+    "ansi": "^0.3.1"
   },
   "author": "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io/)",
   "license": "MIT",
